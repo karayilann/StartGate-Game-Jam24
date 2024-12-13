@@ -47,9 +47,6 @@ namespace _Project.Scripts.Character
             HandleMouseLook();
             HandleMovementInput();
             HandleJump();
-            Debug.Log("isGrounded: " + _isGrounded);
-            Debug.Log("Velocity: " + rb.velocity);
-            Debug.Log("isMoving: " + _isMoving);
         }
 
         void FixedUpdate()
@@ -88,16 +85,16 @@ namespace _Project.Scripts.Character
             rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
             _isMoving = _movementInput.magnitude > 0;
 
-            if (_isGrounded && _isMoving)
-            {
-                if (!audioSource.isPlaying)
-                {
-                    audioSource.clip = footstepClip;
-                    audioSource.loop = true;
-                    audioSource.Play();
-                    Debug.Log("Footstep sound started");
-                }
-            }
+            // if (_isGrounded && _isMoving)
+            // {
+            //     if (!audioSource.isPlaying)
+            //     {
+            //         audioSource.clip = footstepClip;
+            //         audioSource.loop = true;
+            //         audioSource.Play();
+            //         Debug.Log("Footstep sound started");
+            //     }
+            // }
         }
 
         private void HandleJump()
@@ -110,7 +107,6 @@ namespace _Project.Scripts.Character
                 //audioSource.clip = jumpClip;
                 audioSource.PlayOneShot(jumpClip);
 
-                Debug.Log("Jump sound played");
 
                 //StartCoroutine(TemporaryGroundedDelay());
             }

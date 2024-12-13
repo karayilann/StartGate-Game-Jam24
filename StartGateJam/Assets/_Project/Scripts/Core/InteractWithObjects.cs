@@ -5,34 +5,61 @@ namespace _Project.Scripts.Core
 {
     public class InteractWithObjects : MonoBehaviour
     {
-        public float maxInteractionDistance;
-        public Camera mainCamera;
+        [SerializeField] private float maxInteractionDistance = 5f;
+        [SerializeField] private Camera mainCamera;
+        private Outline _currentOutline;
+
         private void Update()
         {
-            InteractRay();
+            HandleObjectInteraction();
         }
 
-        private void InteractRay()
+        private void HandleObjectInteraction()
         {
-            var screenPointRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray screenPointRay = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit hit;
-
-            bool hasHit = Physics.Raycast(screenPointRay, out hit,maxInteractionDistance);
-
-            if (hasHit)
+            if (Physics.Raycast(screenPointRay, out RaycastHit hit, maxInteractionDistance))
             {
-                if (Input.GetMouseButtonDown(0))
+                GameObject hitObject = hit.transform.gameObject;
+                
+                if (hitObject.TryGetComponent(out IInteractable interactableObject))
                 {
-                    var o = hit.transform.gameObject;
-                    if (o.TryGetComponent(out IInteractable interactableObject))
-                    {
-                        interactableObject.Interact();
-                    }
+                    interactableObject.Interact();
+                }
+
+                UpdateObjectOutline(hitObject);
+            }
+            else
+            {
+                ClearCurrentOutline();
+            }
+        }
+
+        private void UpdateObjectOutline(GameObject hitObject)
+        {
+            if (hitObject.TryGetComponent(out Outline outline))
+            {
+                if (_currentOutline != outline)
+                {
+                    ClearCurrentOutline();
+                    
+                    _currentOutline = outline;
+                    _currentOutline.OutlineMode = Outline.Mode.OutlineVisible;
                 }
             }
-
+            else
+            {
+                ClearCurrentOutline();
+            }
         }
 
+        private void ClearCurrentOutline()
+        {
+            if (_currentOutline != null)
+            {
+                _currentOutline.OutlineMode = Outline.Mode.OutlineHidden;
+                _currentOutline = null;
+            }
+        }
     }
 }
