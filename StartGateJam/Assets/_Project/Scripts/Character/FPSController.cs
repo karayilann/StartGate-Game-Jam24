@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using _Project.Scripts.CoreScripts;
+using _Project.Scripts.Core;
+using _Project.Scripts.UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Character
 {
@@ -17,7 +15,7 @@ namespace _Project.Scripts.Character
 
         [Header("Camera Settings")]
         [SerializeField] private Camera playerCamera;
-        public float mouseSensitivity = 2f;
+        public float mouseSensitivity;
         [SerializeField] private float cameraVerticalLimit;
         public bool canLook = true;
 
@@ -33,6 +31,7 @@ namespace _Project.Scripts.Character
         
         [Space(10f)]
         public Rigidbody rb;
+        public GameObject pausePanel;
         private float _verticalRotation = 0f;
         private bool _isGrounded;
         private bool _isMoving;
@@ -50,6 +49,15 @@ namespace _Project.Scripts.Character
             HandleMouseLook();
             HandleMovementInput();
             HandleJump();
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                pausePanel.SetActive(true);
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            audioSource.volume = Mathf.Clamp(MenuManager.MasterVolumeValue, 0, 1);
+            mouseSensitivity = MenuManager.MouseSensitivityValue;
         }
 
         void FixedUpdate()
@@ -60,8 +68,8 @@ namespace _Project.Scripts.Character
         private void HandleMouseLook()
         {
             if(!canLook) return;
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime * 10;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime * 10;
 
             _verticalRotation -= mouseY;
             _verticalRotation = Mathf.Clamp(_verticalRotation, -cameraVerticalLimit, cameraVerticalLimit);

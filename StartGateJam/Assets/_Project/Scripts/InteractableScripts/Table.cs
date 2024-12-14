@@ -21,7 +21,6 @@ namespace _Project.Scripts.InteractableScripts
             {
                 _currentSpawnRate = minRate;
                 visualEffect.SetInt("Spawn rate", _currentSpawnRate);
-                
             }
             else
             {

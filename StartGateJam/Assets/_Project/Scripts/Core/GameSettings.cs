@@ -1,4 +1,3 @@
-using _Project.Scripts.CoreScripts;
 using UnityEngine;
 
 namespace _Project.Scripts.Core
