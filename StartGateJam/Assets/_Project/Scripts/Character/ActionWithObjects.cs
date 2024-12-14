@@ -15,7 +15,7 @@ namespace _Project.Scripts.Character
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Table"))
+            if (other.gameObject.CompareTag("Interactable"))
             {
                 interactProgressBar.gameObject.SetActive(true);
             }
@@ -23,7 +23,7 @@ namespace _Project.Scripts.Character
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.gameObject.CompareTag("Table"))
+            if (other.gameObject.CompareTag("Interactable"))
             {
                 _currentInteractableObject = other.gameObject;
 
@@ -40,7 +40,7 @@ namespace _Project.Scripts.Character
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.CompareTag("Table"))
+            if (other.gameObject.CompareTag("Interactable"))
             {
                 ResetInteraction();
                 interactProgressBar.gameObject.SetActive(false);

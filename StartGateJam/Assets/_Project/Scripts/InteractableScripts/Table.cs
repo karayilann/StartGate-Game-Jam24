@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using _Project.Scripts.Character;
 using _Project.Scripts.Interfaces;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.VFX;
 
-namespace _Project.Scripts.ItemScripts
+namespace _Project.Scripts.InteractableScripts
 {
     public class Table : MonoBehaviour, IInteractable
     {
