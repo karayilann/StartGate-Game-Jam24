@@ -2,6 +2,7 @@ using System.Collections;
 using _Project.Scripts.Character;
 using _Project.Scripts.Interfaces;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
 
 namespace _Project.Scripts.InteractableScripts
@@ -46,7 +47,7 @@ namespace _Project.Scripts.InteractableScripts
 
         private void Update()
         {
-            if (infoPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            if (infoPanel.activeSelf && Input.GetKeyDown(KeyCode.E))
             {
                 CloseInfoPanel();
             }
@@ -102,6 +103,7 @@ namespace _Project.Scripts.InteractableScripts
             _currentSpawnRate = maxRate;
             visualEffect.SetInt("Spawn rate", _currentSpawnRate);
             visualEffect.SetFloat("Particle Size", 900f);
+            SceneManager.LoadScene(2);
         }
     }
 }

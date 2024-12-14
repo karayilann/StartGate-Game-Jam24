@@ -8,14 +8,15 @@ namespace _Project.Scripts.Character
     public class FPSController : MonoSingleton<FPSController>
     {
         [Header("Movement Settings")]
-        [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float moveSpeed = 100f;
         [SerializeField] private float sprintMultiplier = 1.5f;
         [SerializeField] private float jumpForce = 5f;
         public bool canMove = true;
+        public bool canPlayable = true;
 
         [Header("Camera Settings")]
         [SerializeField] private Camera playerCamera;
-        public float mouseSensitivity;
+        public float mouseSensitivity = 100f;
         [SerializeField] private float cameraVerticalLimit;
         public bool canLook = true;
 
@@ -49,13 +50,15 @@ namespace _Project.Scripts.Character
             HandleMouseLook();
             HandleMovementInput();
             HandleJump();
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                pausePanel.SetActive(true);
-                Time.timeScale = 0;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
+            // if (Input.GetKeyDown(KeyCode.Escape) && canPlayable)
+            // {
+            //     pausePanel.SetActive(true);
+            //     canMove = false;
+            //     canLook = false;
+            //     Cursor.lockState = CursorLockMode.None;
+            //     Cursor.visible = true;
+            //     canPlayable = false;
+            // }
             audioSource.volume = Mathf.Clamp(MenuManager.MasterVolumeValue, 0, 1);
             mouseSensitivity = MenuManager.MouseSensitivityValue;
         }

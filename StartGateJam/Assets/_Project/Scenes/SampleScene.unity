@@ -807,12 +807,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &976967704 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3402204552392331759, guid: e527a59e8e74b194697332e7e96a10b8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7983302083939297807}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1041191735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,21 +2090,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3402204552392331759, guid: e527a59e8e74b194697332e7e96a10b8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3768739552580514031, guid: e527a59e8e74b194697332e7e96a10b8,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5560102541815877552, guid: e527a59e8e74b194697332e7e96a10b8,
-        type: 3}
-      propertyPath: pausePanel
-      value: 
-      objectReference: {fileID: 976967704}
     - target: {fileID: 8603712296993950798, guid: e527a59e8e74b194697332e7e96a10b8,
         type: 3}
       propertyPath: m_LocalPosition.x

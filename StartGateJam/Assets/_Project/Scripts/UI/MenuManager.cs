@@ -21,8 +21,8 @@ namespace _Project.Scripts.UI
         public Slider mouseSensitivitySlider;
 
         [Header("Values")]
-        private static float _masterVolume;
-        private static float _mouseSensitivity;
+        private static float _masterVolume = 1f ;
+        private static float _mouseSensitivity = 5f;
         public static float MasterVolumeValue => _masterVolume;
         public static float MouseSensitivityValue => _mouseSensitivity;
         
@@ -69,7 +69,7 @@ namespace _Project.Scripts.UI
         
         public void OnClickStart()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
         
         public void OnClickSettings()

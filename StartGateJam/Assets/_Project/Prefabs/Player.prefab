@@ -495,7 +495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5710669604987854881
 RectTransform:
   m_ObjectHideFlags: 0
@@ -567,6 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c9fd228df3b704dbba72f44bd89f4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fpsController: {fileID: 5560102541815877552}
 --- !u!1 &3417910063431651597
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +676,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.87, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 28.02, y: 59.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4579816662885796426}
@@ -698,7 +699,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3768739552580514031}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -799,6 +800,7 @@ MonoBehaviour:
   sprintMultiplier: 1.5
   jumpForce: 5
   canMove: 1
+  canPlayable: 1
   playerCamera: {fileID: 5650212606198852337}
   mouseSensitivity: 200
   cameraVerticalLimit: 30
@@ -811,8 +813,8 @@ MonoBehaviour:
   audioSource: {fileID: 260104848085720133}
   footstepClip: {fileID: 8300000, guid: 2a94c121484bfae4aa09cd5085c9cf09, type: 3}
   jumpClip: {fileID: 8300000, guid: c86eca4fca1001d4f97490f955a25eec, type: 3}
-  volume: 0
   rb: {fileID: 2658839113577513982}
+  pausePanel: {fileID: 3402204552392331759}
 --- !u!82 &260104848085720133
 AudioSource:
   m_ObjectHideFlags: 0
