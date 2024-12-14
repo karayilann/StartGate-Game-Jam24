@@ -1,19 +1,22 @@
+using System;
+using _Project.Scripts.Core;
+using _Project.Scripts.Interfaces;
 using UnityEngine;
 
 namespace _Project.Scripts.InteractableScripts
 {
-    public class PuzzleObjects : MonoBehaviour
+    public class PuzzleObjects : MonoBehaviour,IInteractable
     {
-        // Start is called before the first frame update
-        void Start()
+        public int id;
+
+        public void Interact()
         {
-        
+            TakeObject();
         }
 
-        // Update is called once per frame
-        void Update()
+        private void TakeObject()
         {
-        
+            PuzzleManager.Instance.AddedObject(id);
         }
     }
 }
