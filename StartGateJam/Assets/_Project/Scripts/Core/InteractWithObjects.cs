@@ -22,10 +22,10 @@ namespace _Project.Scripts.Core
             {
                 GameObject hitObject = hit.transform.gameObject;
                 
-                if (hitObject.TryGetComponent(out IInteractable interactableObject))
-                {
-                    interactableObject.Interact();
-                }
+                // if (hitObject.TryGetComponent(out IInteractable interactableObject))
+                // {
+                //     interactableObject.Interact();
+                // }
 
                 UpdateObjectOutline(hitObject);
             }
