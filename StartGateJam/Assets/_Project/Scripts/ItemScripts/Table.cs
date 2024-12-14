@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Character;
 using _Project.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +21,25 @@ namespace _Project.Scripts.ItemScripts
             if (!isOn)
             {
                 infoPanel.SetActive(true);
-            }else
+                FPSController.Instance.canMove = false;
+                FPSController.Instance.canLook = false;
+            }
+            // else
+            // {
+            //     infoPanel.SetActive(false);
+            // }
+        }
+
+        private void Update()
+        {
+            if (infoPanel.activeSelf)
             {
-                infoPanel.SetActive(false);
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    infoPanel.SetActive(false);
+                    Debug.Log("Portal is opening");
+                }
             }
         }
-        
     }
 }

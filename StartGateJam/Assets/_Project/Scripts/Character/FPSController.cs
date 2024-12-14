@@ -1,22 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.CoreScripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Character
 {
-    public class FPSController : MonoBehaviour
+    public class FPSController : MonoSingleton<FPSController>
     {
         [Header("Movement Settings")]
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float sprintMultiplier = 1.5f;
         [SerializeField] private float jumpForce = 5f;
+        public bool canMove = true;
 
         [Header("Camera Settings")]
         [SerializeField] private Camera playerCamera;
         public float mouseSensitivity = 2f;
         [SerializeField] private float cameraVerticalLimit;
+        public bool canLook = true;
 
         [Header("Ground Check")]
         [SerializeField] private Transform groundCheck;
@@ -56,6 +59,7 @@ namespace _Project.Scripts.Character
 
         private void HandleMouseLook()
         {
+            if(!canLook) return;
             float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
@@ -77,6 +81,7 @@ namespace _Project.Scripts.Character
 
         private void ApplyMovement()
         {
+            if (!canMove) return;
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
             float currentSpeed = Input.GetKey(KeyCode.LeftShift) ? moveSpeed * sprintMultiplier : moveSpeed;
