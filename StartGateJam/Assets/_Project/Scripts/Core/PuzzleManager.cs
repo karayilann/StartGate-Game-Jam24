@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.Core
 {
@@ -13,7 +14,9 @@ namespace _Project.Scripts.Core
             public int id;
             public AudioClip soundClip;
         }
-        
+
+        public AudioSource otherSound;
+        public AudioClip correctSound;
         public GameObject popupPanel;
         public bool isCalled;
         public TextMeshProUGUI popupText;
@@ -58,6 +61,7 @@ namespace _Project.Scripts.Core
             if (!isCalled)
             {
                 MoveToScene("All notes collected. Skip this step by pressing the 1, 2, 3 keys in the correct combination.");
+                otherSound.Stop();
                 isCalled = true;
             }
             for (int i = 1; i <= 4; i++)
@@ -67,6 +71,12 @@ namespace _Project.Scripts.Core
                     ProcessKeyPress(i - 1);
                 }
             }
+
+            if (_isPressed)
+            {
+                SceneManager.LoadScene(0);
+            }
+            
         }
 
         private void MoveToScene(string text)
@@ -90,7 +100,7 @@ namespace _Project.Scripts.Core
             popupPanel.SetActive(false);
         }
         
-        
+        bool _isPressed = false;
         private void ProcessKeyPress(int index)
         {
             if (index < 0 || index >= _collectedObjectIds.Count)
@@ -100,15 +110,13 @@ namespace _Project.Scripts.Core
             }
 
             _pressedSequence.Add(_collectedObjectIds[index]);
-            Debug.Log("Pressed key: " + _collectedObjectIds[index]);
 
             if (IsSequenceCorrect())
             {
-                Debug.Log("Correct sequence! Well done!");
-    
-                // Sekansı sırayla çal
-                //PlaySoundForCorrectSequence();
-                MoveToScene("Correct sequence! Well done!");
+                otherSound.clip = correctSound;
+                otherSound.Play();
+                MoveToScene("Correct sequence! Well done! Returning to the main menu in 10 seconds. If you want to don't wait, press F");
+                _isPressed = Input.GetKeyDown(KeyCode.F);
                 StartCoroutine(LoadMainMenu());
                 _pressedSequence.Clear();
             }
@@ -122,7 +130,7 @@ namespace _Project.Scripts.Core
 
         private IEnumerator LoadMainMenu()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(10f);
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 

@@ -8,7 +8,6 @@ namespace _Project.Scripts.InteractableScripts
     public class PuzzleObjects : MonoBehaviour,IInteractable
     {
         public int id;
-
         public void Interact()
         {
             TakeObject();

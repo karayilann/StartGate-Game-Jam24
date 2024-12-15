@@ -54,6 +54,7 @@ namespace _Project.Scripts.UI
         {
             masterVolumeSlider.onValueChanged.AddListener(delegate { MasterVolume = masterVolumeSlider.value; });
             mouseSensitivitySlider.onValueChanged.AddListener(delegate { MouseSensitivity = mouseSensitivitySlider.value; });
+            Time.timeScale = 1f;
         }
 
         private void OnDestroy()

@@ -1,17 +1,18 @@
 using System.Collections;
+using _Project.Scripts.Character;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace _Project.Scripts.Core
 {
     public class DialogueSystem : MonoBehaviour
-    { 
+    {
         public TextMeshProUGUI txtComponent;
         public string[] lines;
         public float textSpeed;
 
         private int _index;
+        private bool _isTyping; // Yeni bayrak: Şu anda yazı yazılıyor mu?
 
         private void Start()
         {
@@ -23,15 +24,25 @@ namespace _Project.Scripts.Core
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if(txtComponent.text == lines[_index])
+                if (_isTyping)
                 {
-                    NextLine();
-                } 
+                    StopCoroutine("TypeLine");
+                    txtComponent.text = lines[_index];
+                    _isTyping = false;
+                }
                 else
                 {
-                    StopAllCoroutines();
-                    txtComponent.text = lines[_index];
+                    NextLine();
                 }
+            }
+        }
+
+        private IEnumerator AutomaticSwitchLine()
+        {
+            yield return new WaitForSeconds(0.5f);
+            if (!_isTyping) // Sadece yazma işlemi bitmişse geç
+            {
+                NextLine();
             }
         }
 
@@ -43,11 +54,17 @@ namespace _Project.Scripts.Core
 
         IEnumerator TypeLine()
         {
+            _isTyping = true; // Yazı başlıyor
+            txtComponent.text = string.Empty;
+
             foreach (char c in lines[_index].ToCharArray())
             {
                 txtComponent.text += c;
                 yield return new WaitForSeconds(textSpeed);
             }
+
+            _isTyping = false; // Yazı tamamlandı
+            StartCoroutine(AutomaticSwitchLine());
         }
 
         private void NextLine()
@@ -55,12 +72,12 @@ namespace _Project.Scripts.Core
             if (_index < lines.Length - 1)
             {
                 _index++;
-                txtComponent.text = string.Empty;
                 StartCoroutine(TypeLine());
             }
             else
-            {
-                gameObject.SetActive(false);
+            {   FPSController.Instance.canLook = true;
+                FPSController.Instance.canMove = true;
+                gameObject.SetActive(false); // Diyalog sistemi devre dışı
             }
         }
     }

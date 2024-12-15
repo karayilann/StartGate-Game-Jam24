@@ -30,14 +30,15 @@ namespace _Project.Scripts.InteractableScripts
         {
             FPSController.Instance.canLook = false;
             FPSController.Instance.canMove = false;
+            boxCollider.enabled = false;
             dialoguePanel.gameObject.SetActive(true);
             dialogueSystem.enabled = true;
-            StartCoroutine(ContinueGame());
+            //StartCoroutine(ContinueGame());
         }
 
         private IEnumerator ContinueGame()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(15f);
             dialoguePanel.gameObject.SetActive(false);
             dialogueSystem.enabled = false;
             FPSController.Instance.canLook = true;
