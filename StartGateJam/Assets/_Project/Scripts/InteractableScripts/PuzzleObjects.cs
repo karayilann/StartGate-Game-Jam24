@@ -17,6 +17,7 @@ namespace _Project.Scripts.InteractableScripts
         private void TakeObject()
         {
             PuzzleManager.Instance.AddedObject(id);
+            Destroy(gameObject);
         }
     }
 }

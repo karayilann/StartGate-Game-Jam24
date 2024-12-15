@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using _Project.Scripts.Character;
 using _Project.Scripts.Core;
 using _Project.Scripts.Interfaces;
@@ -10,7 +11,7 @@ namespace _Project.Scripts.InteractableScripts
     {
         public DialogueSystem dialogueSystem;
         public GameObject dialoguePanel;
-
+        public BoxCollider boxCollider;
         private void OnTriggerExit(Collider other)
         {
             if (!other.gameObject.CompareTag("Player")) return;
@@ -31,7 +32,17 @@ namespace _Project.Scripts.InteractableScripts
             FPSController.Instance.canMove = false;
             dialoguePanel.gameObject.SetActive(true);
             dialogueSystem.enabled = true;
+            StartCoroutine(ContinueGame());
         }
-        
+
+        private IEnumerator ContinueGame()
+        {
+            yield return new WaitForSeconds(5f);
+            dialoguePanel.gameObject.SetActive(false);
+            dialogueSystem.enabled = false;
+            FPSController.Instance.canLook = true;
+            FPSController.Instance.canMove = true;
+            boxCollider.enabled = false;
+        }
     }
 }

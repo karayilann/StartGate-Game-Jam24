@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace _Project.Scripts.Core
@@ -12,11 +13,13 @@ namespace _Project.Scripts.Core
             public int id;
             public AudioClip soundClip;
         }
-
+        
+        public GameObject popupPanel;
+        public bool isCalled;
+        public TextMeshProUGUI popupText;
         [SerializeField] private List<PuzzleSound> puzzleSounds = new List<PuzzleSound>();
         [SerializeField] private AudioSource audioSource;
         
-        // Custom sequence that can be set in the Inspector
         [SerializeField] private List<int> correctSequence = new List<int>();
 
         private readonly List<int> _collectedObjectIds = new List<int>();
@@ -34,7 +37,6 @@ namespace _Project.Scripts.Core
                 }
             }
 
-            // Validate the correct sequence
             if (correctSequence.Count == 0)
             {
                 Debug.LogWarning("No correct sequence defined!");
@@ -53,7 +55,11 @@ namespace _Project.Scripts.Core
         private void Update()
         {
             if (!AreAllObjectsCollected()) return;
-
+            if (!isCalled)
+            {
+                MoveToScene("All notes collected. Skip this step by pressing the 1, 2, 3 keys in the correct combination.");
+                isCalled = true;
+            }
             for (int i = 1; i <= 4; i++)
             {
                 if (Input.GetKeyDown(KeyCode.Alpha0 + i))
@@ -63,6 +69,28 @@ namespace _Project.Scripts.Core
             }
         }
 
+        private void MoveToScene(string text)
+        {
+            popupPanel.SetActive(true);
+            popupText.text = text;
+            
+            Vector2 currentAnchoredPosition = popupPanel.GetComponent<RectTransform>().anchoredPosition;
+
+            float newY = Mathf.Lerp(currentAnchoredPosition.y, -50.95f, Time.deltaTime * 1.5f);
+
+            popupPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(currentAnchoredPosition.x, newY);
+            Debug.Log("Popup panel is active");
+            StartCoroutine(PopupPanelDelay());
+        }
+
+
+        private IEnumerator PopupPanelDelay()
+        {
+            yield return new WaitForSeconds(2f);
+            popupPanel.SetActive(false);
+        }
+        
+        
         private void ProcessKeyPress(int index)
         {
             if (index < 0 || index >= _collectedObjectIds.Count)
@@ -79,16 +107,23 @@ namespace _Project.Scripts.Core
                 Debug.Log("Correct sequence! Well done!");
     
                 // Sekansı sırayla çal
-                PlaySoundForCorrectSequence();
-
+                //PlaySoundForCorrectSequence();
+                MoveToScene("Correct sequence! Well done!");
+                StartCoroutine(LoadMainMenu());
                 _pressedSequence.Clear();
             }
 
             else if (_pressedSequence.Count >= correctSequence.Count)
             {
-                Debug.Log("Incorrect sequence. Try again!");
+                MoveToScene("Wrong sequence! Try again!");
                 _pressedSequence.Clear();
             }
+        }
+
+        private IEnumerator LoadMainMenu()
+        {
+            yield return new WaitForSeconds(2f);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
 
         private bool IsSequenceCorrect()
@@ -150,11 +185,10 @@ namespace _Project.Scripts.Core
                 }
             }
         }
-
         
         public bool AreAllObjectsCollected()
         {
-            return _collectedObjectIds.Count == 4;
+            return _collectedObjectIds.Count == 3;
         }
     }
 }
